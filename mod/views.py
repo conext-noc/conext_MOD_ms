@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 
-# from mod.scripts.OP import operate
+from mod.scripts.MC import modifyClient
 
 
 class CHECK(generics.GenericAPIView):
@@ -20,8 +20,10 @@ class MOD(generics.GenericAPIView):
   def post(self,req):
     if req.META['HTTP_CONEXT_KEY'] == os.environ["CONEXT_KEY"]:
       status_code = 200
-      data = req.data
-      res = []
-      return Response({"message":"OK", "data":res})
+      tp,modify,data,new_values = req.data.values()
+      if tp == "a":
+        res = modifyClient(modify, data, new_values)
+        return Response({"message":"success", "data":res["client"],"error": res["error"]})
+      return Response({"message":"Manual Action Needed", "data":{},})
     else:
       return HttpResponse("Bad Request to server", status=400)
