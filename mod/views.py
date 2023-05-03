@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 
-from ops.scripts.OP import operate
+# from mod.scripts.OP import operate
 
 
 class CHECK(generics.GenericAPIView):
