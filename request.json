@@ -20,3 +20,65 @@
     "provider":""
   }
 }
+
+// FSP
+{
+  "type":"a",
+  "modify": "FSP",
+  "data":{
+    "contract":"9999999999",
+    "olt":"1"
+  },
+  "new_values": {
+    "frame":"0",
+		"slot":"1",
+		"port":"3",
+		"device_type": "M"
+  }
+}
+
+
+// N&C
+{
+  "type":"a",
+  "modify": "N&C",
+  "data":{
+    "contract":"CONTRACT NUMBER",
+    "olt":"1"
+  },
+  "new_values": {
+    "name_1":"PRUEBA",
+    "name_2":"PRUEBA",
+    "contract":"9999999999"
+  }
+}
+
+// P&P
+{
+  "type":"a",
+  "modify": "P&P",
+  "data":{
+    "contract":"9999999999",
+    "olt":"1"
+  },
+  "new_values": {
+    "plan_name":"OZ_PLUS_1",
+		"assigned_public_ip":"181.232.181.X",
+		"device_type": "M|B",
+		"provider":"INTER"
+  }
+}
+
+// OSN
+{
+  "type":"a",
+  "modify": "OSN",
+  "data":{
+    "contract":"9999999999",
+    "olt":"1"
+  },
+  "new_values": {
+    "sn":"ONU_SERIAL_NUMBER[16]",
+		"device_type":"M|B"
+  }
+}

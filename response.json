@@ -1,19 +1,31 @@
 {
-  "error":"false|true",
-  "message":"success | error message",
-  "data":{
-    "name":"",
-    "contract":"",
-    "olt":"",
-    "frame":"",
-    "slot":"",
-    "port":"",
-    "onu_id":"",
-    "sn":"",
-    "plan_name":"",
-    "provider":"",
-    "temperature":"",
-    "power":"",
-    "admin_status":""
-  }
+	"message": "success|error message",
+	"data": {
+		"frame": "x",
+		"slot": "x",
+		"port": "x",
+		"onu_id": "x",
+		"name": "PRUEBA PRUEBA 9999999999",
+		"state": "active",
+		"status": "offline",
+		"sn": "ONU_SERIAL_NUMBER",
+		"olt": "1",
+		"wan?": [
+			{
+				"line_profile": 0,
+				"srv_profile": 0,
+				"vlan": 0,
+				"provider": "INTER",
+				"name": "OZ_0_1",
+				"plan": 0,
+				"gem_port": 0,
+				"spid": 0
+			}
+		],
+		"plan_name?": "OZ_0_1",
+		"line_profile?": 0,
+		"srv_profile?": 0,
+		"device_type?": "M"
+	},
+	"error": false
 }
