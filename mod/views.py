@@ -23,7 +23,7 @@ class MOD(generics.GenericAPIView):
       tp,modify,data,new_values = req.data.values()
       if tp == "a":
         res = modifyClient(modify, data, new_values)
-        return Response({"message":"success", "data":res["client"],"error": res["error"]})
+        return Response({"message":res["message"], "data":res["client"],"error": res["error"]})
       return Response({"message":"Manual Action Needed", "data":{},})
     else:
       return HttpResponse("Bad Request to server", status=400)

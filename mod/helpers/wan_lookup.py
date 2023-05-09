@@ -1,7 +1,7 @@
 from time import sleep
 from mod.helpers.decoder import decoder, check
 from mod.helpers.fail_handler import failChecker
-from mod.helpers.operations.spid import ontSpid
+from mod.helpers.spid import ontSpid
 from mod.helpers.plans import planX15Maps, planX2Maps, planX15NMaps
 from mod.helpers.regexConditions import wanMapper
 

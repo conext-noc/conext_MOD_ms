@@ -1,7 +1,7 @@
 from time import sleep
 from mod.helpers.decoder import decoder, check, checkIter
 from mod.helpers.fail_handler import failChecker
-from mod.helpers.file_handler import dataToDict
+from mod.helpers.file_handler import data_to_dict
 
 conditionSpidOnt = "CTRL_C to break"
 condition = "-----------------------------------------------------------------------------"
@@ -30,7 +30,7 @@ def ontSpid(comm, command, client):
         limits = checkIter(value, condition)
         (_, s) = limits[1]
         (e, _) = limits[2]
-        data = dataToDict(spidHeader, value[s: e - 2]) if int(client['slot']) < 10 else dataToDict(spidHeader10, value[s: e - 2])
+        data = data_to_dict(spidHeader, value[s: e - 2]) if int(client['slot']) < 10 else data_to_dict(spidHeader10, value[s: e - 2])
         return (data, None)
     else:
         return (None, fail)
