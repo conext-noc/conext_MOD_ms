@@ -8,15 +8,11 @@ load_dotenv()
 
 from mod.scripts.MC import modifyClient
 
-
-class CHECK(generics.GenericAPIView):
+class MOD(generics.GenericAPIView):
   def get(self, req):
     status_code = 200
     response_text = "ms_running"
     return HttpResponse(response_text, status=status_code)
-
-
-class MOD(generics.GenericAPIView):
   def post(self,req):
     if req.META['HTTP_CONEXT_KEY'] == os.environ["CONEXT_KEY"]:
       status_code = 200
