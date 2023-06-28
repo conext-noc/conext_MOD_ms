@@ -1,4 +1,4 @@
-from ins.helpers.utils.decoder import check, check_iter
+from mod.helpers.utils.decoder import check, check_iter
 
 END_FAIL = "MARLLM0"
 
