@@ -9,7 +9,7 @@ load_dotenv()
 
 
 class MOD(generics.GenericAPIView):
-    def get(self):
+    def get(self, _):
         status_code = 200
         response_text = "ms_running"
         return HttpResponse(response_text, status=status_code)
@@ -17,7 +17,7 @@ class MOD(generics.GenericAPIView):
     def post(self, req):
         if req.META["HTTP_CONEXT_KEY"] == os.environ["CONEXT_KEY"]:
             data = req.data
-            if data["tp"] == "a":
+            if data["type"] == "a":
                 res = client_modify(data)
                 return Response(res)
             return Response(

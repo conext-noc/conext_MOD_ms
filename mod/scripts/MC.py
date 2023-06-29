@@ -20,12 +20,18 @@ def client_modify(data):
     payload["lookup_value"] = data["contract"]
     req = db_request(endpoints["get_client"], payload)
 
+    if req["data"] is None:
+        return {
+            "message": "The required OLT & ONT does not exists",
+            "contract": data["contract"],
+        }
+
     client = req["data"]
     (command, quit_ssh) = ssh(olt_devices[str(client["olt"])])
 
     if change_type not in change_types:
         quit_ssh()
-        message = "Tipo de modificacion no existe."
+        message = "Modify type does not exist"
         return {"message": message, "error": True, "data": None}
 
     payload["change_field"] = change_type
@@ -39,13 +45,14 @@ def client_modify(data):
         client["contract"] = new_values["contract"]
 
     if change_type == "CP":
-        db_req = db_request(endpoints["get_plans"])
+        client["device_type"] = new_values["device_type"]
+        db_req = db_request(endpoints["get_plans"], {})
         db_plans = db_req["data"]
         plan_lists = [item["plan_name"] for item in db_plans]
 
         if new_values["plan_name"] not in plan_lists:
             quit_ssh()
-            message = "El plan ingresado no existe."
+            message = "Selected plan does not exist."
             return {"message": message, "error": True, "data": None}
 
         plan = next(
@@ -61,7 +68,7 @@ def client_modify(data):
         command(
             f"ont modify {client['port']} {client['onu_id']} ont-srvprofile-id {plan['srv_profile']}"
         )
-        client["wan"][0] = plan
+        client["wan"] = [plan]
         client["plan_name"] = new_values["plan_name"]
         add_service(command, client)
 

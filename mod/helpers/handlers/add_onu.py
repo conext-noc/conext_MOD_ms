@@ -1,27 +1,5 @@
 from time import sleep
-from mod.helpers.utils.decoder import decoder, check
 from mod.helpers.handlers.spid import calculate_spid
-from mod.helpers.handlers.fail import fail_checker
-
-
-def add_client(comm, command, data):
-    command(f"interface gpon {data['frame']}/{data['slot']}")
-    command(
-        f'ont add {data["port"]} sn-auth {data["sn"]} omci ont-lineprofile-id {data["line_profile"]} ont-srvprofile-id {data["srv_profile"]} desc "{data["name_1"]} {data["name_2"]} {data["contract"]}" '
-    )
-    sleep(5)
-    value = decoder(comm)
-    fail = fail_checker(value)
-    if fail is not None:
-        return (None, fail)
-    (_, end) = check(value, "ONTID :").span()
-    ID = value[end : end + 3].replace(" ", "").replace("\n", "").replace("\r", "")
-    command(
-        f'ont optical-alarm-profile {data["port"]} {ID} profile-name ALARMAS_OPTICAS'
-    )
-    command(f'ont alarm-policy {data["port"]} {ID} policy-name FAULT_ALARMS')
-    command("quit")
-    return (int(ID), fail)
 
 
 def add_service(command, data):
@@ -30,7 +8,6 @@ def add_service(command, data):
         if "_IP" not in data["plan_name"]
         else calculate_spid(data)["P"]
     )
-
     command(f"interface gpon {data['frame']}/{data['slot']}")
 
     command(
