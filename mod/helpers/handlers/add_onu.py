@@ -14,7 +14,7 @@ def add_service(command, data):
         f"ont port native-vlan {data['port']} {data['onu_id']} eth 1 vlan {data['wan'][0]['vlan']}"
     ) if data["device_type"] == "B" else None
 
-    IPADD = data["assigned_public_ip"] if "_IP" in data["plan_name"] else None
+    IPADD = data["assigned_ip_address"] if "_IP" in data["plan_name"] else None
 
     command(
         f"ont ipconfig {data['port']} {data['onu_id']} ip-index 2 dhcp vlan {data['wan'][0]['vlan']}"

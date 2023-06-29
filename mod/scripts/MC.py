@@ -70,6 +70,7 @@ def client_modify(data):
         )
         client["wan"] = [plan]
         client["plan_name"] = new_values["plan_name"]
+        client["assigned_ip_address"] = new_values["assigned_ip_address"]
         add_service(command, client)
 
     if change_type == "CO":
