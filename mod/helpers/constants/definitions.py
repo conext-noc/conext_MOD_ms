@@ -74,4 +74,4 @@ client_payload = {
 ont_type_start = "OntProductDescription    : "
 ont_type_end = "GPON"
 
-change_types = ["CT", "CP", "CO"]
+change_types = ["CT", "CP", "CO", "EC"]

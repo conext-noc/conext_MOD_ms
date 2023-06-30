@@ -77,6 +77,16 @@ def client_modify(data):
         command(f'interface gpon {client["frame"]} {client["slot"]}')
         command(f'ont modify {client["port"]} {client["onu_id"]} sn {new_values["sn"]}')
 
+    if change_type == "EC":
+        command(f'undo service-port {client["spid"]}')
+        command(f'interface gpon {client["frame"]} {client["slot"]}')
+        command(f'ont delete {client["port"]} {client["onu_id"]}')
+        req = db_request(endpoints["remove_client"], payload)
+        if req["error"]:
+            message = "an error occurred deleting client from db"
+        quit_ssh()
+        return {"message": message, "error": False, "data": req["data"]}
+
     payload["new_values"] = new_values
     req = db_request(endpoints["update_client"], payload)
     if req["error"]:
