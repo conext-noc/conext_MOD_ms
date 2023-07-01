@@ -1,3 +1,4 @@
+from time import sleep
 from mod.helpers.constants import definitions
 from mod.helpers.handlers import add_onu, request
 from mod.helpers.utils.ssh import ssh
@@ -81,6 +82,7 @@ def client_modify(data):
         command(f'undo service-port {client["spid"]}')
         command(f'interface gpon {client["frame"]}/{client["slot"]}')
         command(f'ont delete {client["port"]} {client["onu_id"]}')
+        sleep(3)
         req = db_request(endpoints["remove_client"], payload)
         if req["error"]:
             message = "an error occurred deleting client from db"
