@@ -38,7 +38,7 @@ def client_modify(data):
     new_values = data["new_values"]
 
     if change_type == "CT":
-        command(f'interface gpon {client["frame"]} {client["slot"]}')
+        command(f'interface gpon {client["frame"]}/{client["slot"]}')
         command(
             f'ont modify {client["port"]} {client["onu_id"]} desc "{new_values["name_1"]} {new_values["name_2"]} {new_values["contract"]}"'
         )
@@ -61,7 +61,7 @@ def client_modify(data):
         )
 
         command(f'undo service-port {client["spid"]}')
-        command(f'interface gpon {client["frame"]} {client["slot"]}')
+        command(f'interface gpon {client["frame"]}/{client["slot"]}')
         command(
             f"ont modify {client['port']} {client['onu_id']} ont-lineprofile-id {plan['line_profile']}"
         )
@@ -74,12 +74,12 @@ def client_modify(data):
         add_service(command, client)
 
     if change_type == "CO":
-        command(f'interface gpon {client["frame"]} {client["slot"]}')
+        command(f'interface gpon {client["frame"]}/{client["slot"]}')
         command(f'ont modify {client["port"]} {client["onu_id"]} sn {new_values["sn"]}')
 
     if change_type == "EC":
         command(f'undo service-port {client["spid"]}')
-        command(f'interface gpon {client["frame"]} {client["slot"]}')
+        command(f'interface gpon {client["frame"]}/{client["slot"]}')
         command(f'ont delete {client["port"]} {client["onu_id"]}')
         req = db_request(endpoints["remove_client"], payload)
         if req["error"]:
