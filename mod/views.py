@@ -24,3 +24,21 @@ class MOD(generics.GenericAPIView):
                 {"message": "Manual Action Needed", "data": {}, "error": False}
             )
         return HttpResponse("Bad Request to server", status=400)
+
+
+class MODDashboard(generics.GenericAPIView):
+    def get(self, _):
+        status_code = 200
+        response_text = "ms_running"
+        return HttpResponse(response_text, status=status_code)
+
+    def post(self, req):
+        data = req.data
+        if data["API_KEY"] == os.environ["API_KEY"]:
+            if data["type"] == "m":
+                res = client_modify(data)
+                return Response(res)
+            return Response(
+                {"message": "Manual Action Needed", "data": {}, "error": False}
+            )
+        return HttpResponse("Bad Request to server", status=400)
