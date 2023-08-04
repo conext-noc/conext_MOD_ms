@@ -1,22 +1,20 @@
 from time import sleep
-from mod.helpers.constants import definitions
-from mod.helpers.handlers import add_onu, request
+from mod.helpers.constants.definitions import (
+    change_types,
+    endpoints,
+    olt_devices,
+    payload,
+)
+from mod.helpers.handlers.add_onu import add_service
+from mod.helpers.handlers.request import db_request
 from mod.helpers.utils.ssh import ssh
-
-# FUNCTION IMPORT DEFINITIONS
-change_types = definitions.change_types
-endpoints = definitions.endpoints
-olt_devices = definitions.olt_devices
-payload = definitions.payload
-payload_new = definitions.payload
-add_service = add_onu.add_service
-db_request = request.db_request
 
 
 def client_modify(data):
     change_type = data["modify"]
     message = "success"
 
+    payload_new = payload.copy()
     payload["lookup_type"] = "C"
     payload["lookup_value"] = data["contract"]
     req = db_request(endpoints["get_client"], payload)
@@ -28,7 +26,7 @@ def client_modify(data):
         }
 
     client = req["data"]
-    (command, quit_ssh) = ssh(olt_devices[str(client["olt"])])
+    (_, command, quit_ssh) = ssh(olt_devices[str(client["olt"])])
 
     if change_type not in change_types:
         quit_ssh()
