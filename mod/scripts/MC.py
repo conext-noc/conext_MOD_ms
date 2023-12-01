@@ -16,9 +16,8 @@ def client_modify(data):
 
     payload_new = payload.copy()
     payload["lookup_type"] = "C"
-    payload["lookup_value"] = data["contract"]
+    payload["lookup_value"] = data["contract"] + f"_{data['olt']}"
     req = db_request(endpoints["get_client"], payload)
-
     if req["data"] is None:
         return {
             "message": "The required OLT & ONT does not exists",
@@ -58,7 +57,6 @@ def client_modify(data):
             (item for item in db_plans if item["plan_name"] == new_values["plan_name"]),
             None,
         )
-
         command(f'undo service-port {client["spid"]}')
         command(f'interface gpon {client["frame"]}/{client["slot"]}')
         command(
@@ -71,7 +69,6 @@ def client_modify(data):
         client["plan_name"] = new_values["plan_name"]
         client["assigned_ip_address"] = new_values["assigned_ip_address"]
         add_service(command, client)
-
     if change_type == "CO":
         command(f'interface gpon {client["frame"]}/{client["slot"]}')
         command(f'ont modify {client["port"]} {client["onu_id"]} sn {new_values["sn"]}')
