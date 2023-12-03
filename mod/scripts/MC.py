@@ -16,7 +16,7 @@ def client_modify(data):
 
     payload_new = payload.copy()
     payload["lookup_type"] = "C"
-    payload["lookup_value"] = data["contract"] + f"_{data['olt']}"
+    payload["lookup_value"] = {"contract": data["contract"], "olt": data["olt"]}
     req = db_request(endpoints["get_client"], payload)
     if req["data"] is None:
         return {
@@ -85,11 +85,17 @@ def client_modify(data):
         return {"message": message, "error": False, "data": req["data"]}
 
     payload["new_values"] = new_values
-    req = db_request(endpoints["update_client"], payload) if "EC" != change_type else db_request(endpoints["remove_client"], payload)
+    req = (
+        db_request(endpoints["update_client"], payload)
+        if "EC" != change_type
+        else db_request(endpoints["remove_client"], payload)
+    )
     if req["error"]:
         message = "an error occurred updating client from db"
     quit_ssh()
     payload_new["lookup_type"] = "C"
-    payload_new["lookup_value"] = client["contract"]
-    req_new = db_request(endpoints["get_client"], payload_new)  if "EC" != change_type else req
+    payload_new["lookup_value"] = {"contract": client["contract"], "olt": data["olt"]}
+    req_new = (
+        db_request(endpoints["get_client"], payload_new) if "EC" != change_type else req
+    )
     return {"message": message, "error": False, "data": req_new["data"]}
